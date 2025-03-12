@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     const fetchEntries = async () => {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(`${API_URL}/entries`);
       setEntries(response.data as Entry[]);
     };
     fetchEntries();
@@ -34,13 +34,13 @@ function App() {
   const addEntry = async () => {
     if (!newEntry.trim()) return;
     const entry = { text: newEntry, date: new Date().toISOString() };
-    const response = await axios.post(API_URL, entry);
+    const response = await axios.post(`${API_URL}/entries`, entry);
     setEntries([response.data, ...entries]);
     setNewEntry("");
   };
 
   const deleteEntry = async (id: string) => {
-    await axios.delete(`${API_URL}/${id}`);
+    await axios.delete(`${API_URL}/entries/${id}`);
     setEntries(entries.filter(entry => entry.id !== id));
   };
 
