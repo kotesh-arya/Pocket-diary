@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import './App.css'
 
-const API_URL = "http://localhost:8080/entries";
+const environment = import.meta.env.MODE;
+console.log("Current environment:", environment);
+
+const API_URL =
+  environment === "development"
+    ? "http://localhost:8080" // Dev backend
+    : "https://pocket-diary-backend.onrender.com"; // Prod backend
+
+
 
 interface Entry {
   id: string;
