@@ -1,16 +1,16 @@
 self.addEventListener("install", (event) => {
-    event.waitUntil(
-      caches.open("pocket-diary-cache").then((cache) => {
-        return cache.addAll(["/", "/index.html"]);
-      })
-    );
-  });
-  
-  self.addEventListener("fetch", (event) => {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request);
-      })
-    );
-  });
-  
+  event.waitUntil(
+    caches.open("app-cache").then((cache) => {
+      return cache.addAll([
+        "/",
+        "/index.html",
+      ]);
+    })
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
+});
